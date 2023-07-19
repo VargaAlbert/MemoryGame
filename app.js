@@ -1,3 +1,6 @@
+const cardContainer = document.querySelector(".card-container");
+let flippedCards = [];
+
 // Függvény a véletlenszerű számokkal teli tömb létrehozásához
 function createRandomArray() {
     const randomArray = [];
@@ -38,28 +41,79 @@ const finalArray = createDuplicatedRandomArray();
 console.log("Véletlenszerű tömb két példányban:", finalArray);
 
 //új rész
-const grid = document.querySelector(".js-grid");
-let cardsChosen = [];
-let cardsChosenId = [];
+function createArrayOfObjectsFromArray(finalArray) {
+    const arrayOfObjects = finalArray.map((element, index) => ({
+        id: index,
+        value: element
+    }));
 
-function createBoard() {
-    for (let i = 0; i < finalArray.length; i++) {
-        const card = document.createElement("img");
-        card.setAttribute("src", "img/blank.png");
-        card.setAttribute("data-id", finalArray[i]);
-        card.addEventListener("click", flipCard);
-        grid.appendChild(card);
+    return arrayOfObjects;
+}
+
+const finalObject = createArrayOfObjectsFromArray(finalArray);
+
+function createFlipCard(index) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.id = `card-${index}`;
+
+    const front = document.createElement("div");
+    front.classList.add("front");
+    front.classList.add(`${finalObject[index].value}`);
+
+    const cardImgFront = document.createElement("img");
+    cardImgFront.setAttribute("src", "img/blank.png");
+
+    const back = document.createElement("div");
+    back.classList.add("back");
+
+    const cardImgBack = document.createElement("img");
+    cardImgBack.setAttribute(
+        "src",
+        "https://robohash.org/" + finalObject[index].value
+    );
+
+    card.appendChild(front);
+    card.appendChild(back);
+    front.appendChild(cardImgFront);
+    back.appendChild(cardImgBack);
+
+    card.addEventListener("click", () => {
+        if (!card.classList.contains("flip") && flippedCards.length < 2) {
+            card.classList.add("flip");
+            flippedCards.push(card);
+            checkMatch();
+        }
+    });
+
+    return card;
+}
+
+function generateCards() {
+    for (let i = 0; i < finalObject.length; i++) {
+        cardContainer.appendChild(createFlipCard(i));
     }
 }
 
-function flipCard() {
-    let cardId = this.getAttribute("data-id");
-    cardsChosen.push(finalArray[cardId]);
-    cardsChosenId.push(cardId);
-    this.setAttribute("src", "https://robohash.org/" + cardId);
-    if (cardsChosen.length === 2) {
-        /* setTimeout(checkMatch, 500); */
+function checkMatch() {
+    if (flippedCards.length === 2) {
+        const card1Value = flippedCards[0].querySelector(".front").classList;
+        const card2Value = flippedCards[1].querySelector(".front").classList;
+
+        if (
+            Number.parseInt(card1Value[1], 10) === Number.parseInt(card2Value[1], 10)
+        ) {
+            setTimeout(() => {
+                flippedCards.forEach((card) => (card.style.visibility = "hidden")); // Kártya eltüntetése
+                flippedCards = [];
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                flippedCards.forEach((card) => card.classList.remove("flip"));
+                flippedCards = [];
+            }, 1000);
+        }
     }
 }
 
-createBoard();
+generateCards();
