@@ -4,15 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Memory Game</title>
 </head>
 
 <body>
-    <div class="card-container">
+    <section>
+        <div class="countdown-container">
+            <h1>Countdown Timer</h1>
+            <div class="timer">00:00</div>
+        </div>
+    </section>
+    <section class="pop-up">
+        <div class="overlay" id="popup">
+            <div class="popup-content">
+                <h2>Time's Up!</h2>
+                <div class="timer">00:00</div>
+                <p>The countdown has ended.</p>
+                <button class="closeButton">Close</button>
+            </div>
+        </div>
 
-    </div>
-    <script src="app.js"></script>
+        <div class="overlay" id="popupend">
+            <div class="popup-content">
+                <h2>Victory</h2>
+                <p>Game over. Congratulations, you found all the matches</p>
+                <div class="timer">00:00</div>
+                <button class="closeButton">Close</button>
+            </div>
+        </div>
+    </section>
+    <section class="cards-section">
+        <div class="card-container">
+            <script src="./app.js"></script>
+        </div>
+    </section>
 </body>
 
 </html>

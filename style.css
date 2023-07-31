@@ -1,4 +1,62 @@
-body {
+.countdown-container {
+    text-align: center;
+}
+
+/* -----timer----- */
+
+.countdown-container {
+    text-align: center;
+}
+
+.timer {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    visibility: hidden;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+}
+
+button {
+    padding: 8px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* ---timer-end---- */
+
+.cards-section {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +69,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     /* flex-wrap: wrap; */
-    /* width: calc(160px * 5); */
+    width: calc(160px * 4);
 }
 
 .card {
