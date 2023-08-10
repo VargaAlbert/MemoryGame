@@ -17,14 +17,6 @@ let difficulty = 0;
 let rescueTime = 0;
 let countdownInterval;
 
-function openPopupStart() {
-    popupStart.style.visibility = "visible";
-}
-
-function closePopupStart() {
-    popupStart.style.visibility = "hidden";
-}
-
 popupForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -219,6 +211,14 @@ function setTimeConvert() {
     let seconds = (timeInSeconds % 60).toString().padStart(2, "0");
     timerElement[0].textContent = `${minutes}:${seconds}`;
     return [minutes, seconds];
+}
+
+function openPopupStart() {
+    popupStart.style.visibility = "visible";
+}
+
+function closePopupStart() {
+    popupStart.style.visibility = "hidden";
 }
 
 function showPopup() {
