@@ -1,61 +1,124 @@
-/* ---MEMEORIA KARTLYÁK--- */
-const cardContainer = document.querySelector(".card-container");
-let flippedCards = [];
+const popupStart = document.getElementById("js-popupstart");
+const popupForm = document.getElementById("js-popupForm");
+const rangeValue = document.getElementById("js-rangeValue");
+const popup = document.getElementById("js-popup");
+const popupend = document.getElementById("js-popupend");
+const timerElement = document.querySelectorAll(".timer");
+const cardContainer = document.querySelector(".js-card-container");
+const closeButton = document.getElementsByClassName("js-closeButton");
 
-// Függvény a véletlenszerű számokkal teli tömb létrehozásához
+let finalObject = [];
+let flippedCards = [];
+const time = [0, 0];
+let matchCouner = 0;
+let timeInSeconds = 60;
+let range = 1000;
+let difficulty = 0;
+let rescueTime = 0;
+let countdownInterval;
+
+function openPopupStart() {
+    popupStart.style.visibility = "visible";
+}
+
+function closePopupStart() {
+    popupStart.style.visibility = "hidden";
+}
+
+popupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Játék nehézségi szintje, beállítása.
+    const difficultyButtons = document.querySelectorAll("#js-popupForm button");
+    difficultyButtons.forEach((button) => {
+        if (button.classList.contains("selected")) {
+            difficulty = Number(button.id);
+        }
+    });
+
+    // Játékidó beállítása
+    const timeRadios = document.getElementsByName("time");
+    timeRadios.forEach((radio) => {
+        if (radio.checked) {
+            let timeLimit = radio.value;
+            timeInSeconds = Number(timeLimit.split(":")[0]) * 60;
+            /* timeInSeconds = 10; */
+            rescueTime = timeInSeconds;
+        }
+    });
+
+    // Kártya Forgatási sebeség beállítása.
+    range = document.getElementById("range").value;
+
+    let finalArray = createDuplicatedRandomArray();
+    finalObject = createArrayOfObjectsFromArray(finalArray);
+    closePopupStart();
+    generateCards();
+    startCountdown();
+});
+openPopupStart();
+
+// Játék nehézségi szintje, beállítása.
+const difficultyButtons = document.querySelectorAll("#js-popupForm button");
+difficultyButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        difficultyButtons.forEach((btn) => btn.classList.remove("selected"));
+        button.classList.add("selected");
+    });
+});
+
+// Kártya Forgatási sebeség kiirása.
+const rangeInput = document.getElementById("range");
+rangeInput.addEventListener("input", () => {
+    rangeValue.textContent = rangeInput.value;
+});
+
+// Függvény a véletlenszerű számokkal teli tömb létrehozásához.
 function createRandomArray() {
     const randomArray = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < difficulty / 2; i++) {
         const randomNumber = Math.floor(Math.random() * 1000) + 1;
         randomArray.push(randomNumber);
     }
+
     return randomArray;
 }
 
-// Függvény a tömb elemeinek megkeveréséhez
+// Függvény a tömb elemeinek megkeveréséhez.
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+        [array[i], array[j]] = [array[j], array[i]]; //Destrukturálás.
     }
 }
 
-// Függvény a két példányban szereplő számok létrehozásához
+// Függvény a két példányban szereplő számok létrehozásához.
 function createPairsArray(array) {
     const pairsArray = array.slice();
     array.forEach((number) => pairsArray.push(number));
-    shuffleArray(pairsArray); // A két példány megkeverése
+    shuffleArray(pairsArray); // A két példány megkeverése.
     return pairsArray;
 }
 
-// Függvény a két példányban szereplő számokkal teli tömb létrehozásához
+// Függvény a két példányban szereplő számokkal teli tömb létrehozásához.
 function createDuplicatedRandomArray() {
     const randomArray = createRandomArray();
     const duplicatedRandomArray = createPairsArray(randomArray);
     return duplicatedRandomArray;
 }
 
-// 16 elemű tömb létrehozása véletlenszerű, de minden szám pontosan kétszer szerepel
-
-const finalArray = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7];
-/* const finalArray = createDuplicatedRandomArray(); */
-
-// Eredmény kiíratása a konzolon
-/* console.log("Véletlenszerű tömb két példányban:", finalArray); */
-
-//új rész
+//asszociatív tömb létrehozása.
 function createArrayOfObjectsFromArray(finalArray) {
     const arrayOfObjects = finalArray.map((element, index) => ({
         id: index,
         value: element
     }));
-
     return arrayOfObjects;
 }
 
-const finalObject = createArrayOfObjectsFromArray(finalArray);
-
 function createFlipCard(index) {
+    cardContainer.classList.add(`card-container${difficulty}`);
+
     const card = document.createElement("div");
     card.classList.add("card");
     card.id = `card-${index}`;
@@ -93,12 +156,11 @@ function createFlipCard(index) {
 }
 
 function generateCards() {
-    for (let i = 0; i < finalObject.length; i++) {
+    for (let i = 0; i < difficulty; i++) {
         cardContainer.appendChild(createFlipCard(i));
     }
 }
 
-let matchCouner = 0;
 function checkMatch() {
     if (flippedCards.length === 2) {
         const card1Value = flippedCards[0].querySelector(".front").classList;
@@ -111,28 +173,15 @@ function checkMatch() {
                 flippedCards.forEach((card) => (card.style.visibility = "hidden")); // Kártya eltüntetése
                 flippedCards = [];
                 matchCouner++;
-            }, 1000);
+            }, range);
         } else {
             setTimeout(() => {
                 flippedCards.forEach((card) => card.classList.remove("flip"));
                 flippedCards = [];
-            }, 1000);
+            }, range);
         }
     }
 }
-
-generateCards();
-/* ---MEMEORIA KARTLYÁK-END-- */
-
-/* ---timer--- */
-const timerElement = document.querySelectorAll(".timer");
-const popup = document.getElementById("popup");
-const popupend = document.getElementById("popupend");
-const closeButton = document.getElementsByClassName("closeButton");
-const time = [0, 0];
-
-let timeInSeconds = 10; // 5 minutes in seconds
-let countdownInterval;
 
 function startCountdown() {
     countdownInterval = setInterval(updateTimer, 1000);
@@ -142,22 +191,23 @@ function updateTimer() {
     setTimeConvert();
     timeInSeconds--;
 
+    //Ha a játék idö lejár.
     if (timeInSeconds < 0) {
         clearInterval(countdownInterval);
         showPopup();
         timerElement[1].textContent = "00:00";
-        timeInSeconds = 10;
+        timeInSeconds = rescueTime;
         setTimeConvert();
     }
 
-    if (matchCouner === 8) {
+    //Ha az összes egyezés bekövetkezett.
+    if (matchCouner === difficulty / 2) {
         clearInterval(countdownInterval);
         showPopupEnd();
-        console.log(setTimeConvert());
         timerElement[2].textContent = `${setTimeConvert()[0]}:${setTimeConvert()[1]
             }`;
         time[(0, 1)] = setTimeConvert();
-        timeInSeconds = 10;
+        timeInSeconds = rescueTime;
         setTimeConvert();
     }
 }
@@ -180,15 +230,11 @@ function closePopup() {
     popup.style.visibility = "hidden";
     popupend.style.visibility = "hidden";
     matchCouner = 0;
-    startCountdown();
     cardContainer.innerHTML = "";
-    generateCards();
+    openPopupStart();
 }
 
 function showPopupEnd() {
-    console.log(closeButton);
     popupend.style.visibility = "visible";
     closeButton[1].addEventListener("click", closePopup);
 }
-startCountdown();
-/* --timer-end */

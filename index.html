@@ -2,13 +2,44 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Memory Game</title>
 </head>
 
 <body>
+    <section class="pop-up-start">
+        <div class="overlay" id="js-popupstart">
+            <div class="popup-content">
+                <h2>Memory Game</h2>
+                <form id="js-popupForm">
+                    <div>
+                        <label>Choose Time Limit:</label>
+                        <input type="radio" name="time" id="time-1" value="1:00" />
+                        <label for="time-1">1:00</label>
+                        <input type="radio" name="time" id="time-2" value="2:00" checked />
+                        <label for="time-2">2:00</label>
+                        <input type="radio" name="time" id="time-5" value="5:00" />
+                        <label for="time-5">5:00</label>
+                        <input type="radio" name="time" id="time-10" value="10:00" />
+                        <label for="time-10">10:00</label>
+                    </div>
+                    <div>
+                        <label>Choose rotational speed: (300 - 1500):</label>
+                        <input type="range" id="range" name="range" min="300" max="1500" value="1000" step="10" />
+                        <span id="js-rangeValue">1000</span>
+                    </div>
+                    <div>
+                        <label>Choose Difficulty:</label>
+                        <button type="submit" id="4">Easy (2x2)</button>
+                        <button type="submit" id="16">Normal (4x4)</button>
+                        <button type="submit" id="40">Hard (5x8)</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
     <section>
         <div class="countdown-container">
             <h1>Countdown Timer</h1>
@@ -16,29 +47,28 @@
         </div>
     </section>
     <section class="pop-up">
-        <div class="overlay" id="popup">
+        <div id="js-popup" class="overlay">
             <div class="popup-content">
                 <h2>Time's Up!</h2>
                 <div class="timer">00:00</div>
                 <p>The countdown has ended.</p>
-                <button class="closeButton">Close</button>
+                <button class="js-closeButton">Close</button>
             </div>
         </div>
 
-        <div class="overlay" id="popupend">
+        <div class="overlay" id="js-popupend">
             <div class="popup-content">
                 <h2>Victory</h2>
                 <p>Game over. Congratulations, you found all the matches</p>
                 <div class="timer">00:00</div>
-                <button class="closeButton">Close</button>
+                <button class="js-closeButton">Close</button>
             </div>
         </div>
     </section>
     <section class="cards-section">
-        <div class="card-container">
-            <script src="./app.js"></script>
-        </div>
+        <div class="js-card-container"></div>
     </section>
+    <script src="./app.js"></script>
 </body>
 
 </html>
