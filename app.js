@@ -34,7 +34,7 @@ popupForm.addEventListener("submit", (e) => {
         if (radio.checked) {
             let timeLimit = radio.value;
             timeInSeconds = Number(timeLimit.split(":")[0]) * 60;
-            /* timeInSeconds = 10; */
+            timeInSeconds = 10;
             rescueTime = timeInSeconds;
         }
     });
@@ -183,13 +183,14 @@ function updateTimer() {
     setTimeConvert();
     timeInSeconds--;
 
-    //Ha a játék idö lejár.
+    //Ha a játék idö lejár  
     if (timeInSeconds < 0) {
         clearInterval(countdownInterval);
         showPopup();
         timerElement[1].textContent = "00:00";
         timeInSeconds = rescueTime;
         setTimeConvert();
+        flippedCards = [];
     }
 
     //Ha az összes egyezés bekövetkezett.
