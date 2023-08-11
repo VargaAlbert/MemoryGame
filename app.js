@@ -34,7 +34,7 @@ popupForm.addEventListener("submit", (e) => {
         if (radio.checked) {
             let timeLimit = radio.value;
             timeInSeconds = Number(timeLimit.split(":")[0]) * 60;
-            timeInSeconds = 10;
+            /* timeInSeconds = 10; */
             rescueTime = timeInSeconds;
         }
     });
