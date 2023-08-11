@@ -20,9 +20,22 @@ h2 {
     text-align: center;
 }
 
+.page-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #f0f0f0;
+}
+
 /* -----timer----- */
 .countdown-container {
     text-align: center;
+    position: fixed;
+    z-index: 120;
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    opacity: 0.85;
 }
 
 .timer {
@@ -72,31 +85,32 @@ button:focus {
 }
 
 /* ---timer-end---- */
+
 .cards-section {
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     background-color: #f0f0f0;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .card-container4 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    width: calc(160px * 2);
+    width: calc(170px * 2);
 }
 
 .card-container16 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    width: calc(160px * 4);
+    width: calc(170px * 4);
 }
 
 .card-container40 {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    width: calc(160px * 8);
+    width: calc(170px * 8);
 }
 
 .card {
