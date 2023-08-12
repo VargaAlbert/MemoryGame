@@ -18,20 +18,8 @@ h2 {
 
 .countdown-container {
     text-align: center;
-}
-
-/* .page-container {
-    width: calc(170px * 8);
-    height: 100%;
-    overflow: visible;
-    background-color: #f0f0f0;
-} */
-
-/* -----timer----- */
-.countdown-container {
-    text-align: center;
     position: fixed;
-    z-index: 120;
+    z-index: 20;
     width: 100%;
     height: auto;
     background-color: #fff;
@@ -54,7 +42,7 @@ h2 {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
+    z-index: 10;
     visibility: hidden;
 }
 
@@ -83,8 +71,6 @@ button {
 button:focus {
     outline: none;
 }
-
-/* ---timer-end---- */
 
 .cards-section {
     padding-top: 100px;
@@ -163,13 +149,11 @@ button:focus {
 
 @media (min-width: 576px) {
     .card-container4 {
-
         grid-template-columns: repeat(2, 1fr);
         width: calc(130px * 2);
     }
 
     .card-container16 {
-
         grid-template-columns: repeat(4, 1fr);
         width: calc(130px * 4);
     }
