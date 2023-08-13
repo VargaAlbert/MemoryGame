@@ -32,9 +32,7 @@ popupForm.addEventListener("submit", (e) => {
     const timeRadios = document.getElementsByName("time");
     timeRadios.forEach((radio) => {
         if (radio.checked) {
-            let timeLimit = radio.value;
-            timeInSeconds = Number(timeLimit.split(":")[0]) * 60;
-            /* timeInSeconds = 10; */
+            timeInSeconds = Number(radio.value.split(":")[0]) * 60;
             rescueTime = timeInSeconds;
         }
     });
